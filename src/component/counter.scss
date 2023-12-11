@@ -1,0 +1,42 @@
+@import "../component/css.config/mixins.scss";
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  background-color: rgb(13, 15, 17);
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+.input-container {
+ display: flex;
+ flex-direction: column;
+ color: aqua;
+ width: 60%;
+ font-size: 30px;
+ label{
+    margin: 0 0 10px 0;
+ }
+ input{
+font-size: 25px;
+padding: 5px;
+width: 60%;
+border-radius: 10px;
+color: white;
+background-color: rgb(13, 15, 17);
+outline: none;
+border: 0.2px solid rgb(37, 48, 48);
+ }
+ p{
+    margin: 30px;
+    padding-left: 9rem;
+    display: flex;
+    gap: 15px;
+ }
+}
+}
+
