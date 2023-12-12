@@ -22,15 +22,19 @@ const CountDownTimer = () => {
             return prevTime;
           }
 
-          const newSeconds = prevTime.seconds === 0 ? 59 : prevTime.seconds -1;
-          const newMinutes =
-            prevTime.seconds === 0 ? prevTime.minutes -1 : prevTime.minutes;
           const newHours =
             prevTime.hours === 0
               ? prevTime.hours
-              : prevTime.hours -1  + (prevTime.minutes === 0 ? 1 : 0);
+              : prevTime.hours - (prevTime.minutes === 0 && prevTime.seconds === 0 ? 1 : 0);
+          const newMinutes =
+            prevTime.seconds === 0 
+            ? prevTime.minutes -1
+            : prevTime.minutes;
+            //  - (prevTime.hours === 0 && prevTime.minutes === 0 ? 1 : 0);
 
-          return { hours: newHours , minutes: newMinutes, seconds: newSeconds };
+          const newSeconds = prevTime.seconds === 0 ? 59 : prevTime.seconds - 1;
+
+          return { hours: newHours, minutes: newMinutes, seconds: newSeconds };
         });
       }, 1000);
     };
@@ -52,37 +56,43 @@ const CountDownTimer = () => {
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
-    const inputMinutes =Math.max( parseInt(inputValue, 10) , 0) || 0;
+    const inputMinutes = Math.max(parseInt(inputValue, 10), 0) || 0;
     setInputMinutes(inputMinutes);
+
     const newHours = Math.floor(inputMinutes / 60);
     const newMinutes = inputMinutes % 60;
+    console.log("minute", newMinutes);
+
     setTime({ hours: newHours, minutes: newMinutes, seconds: 0 });
     setIsRunning(false);
   };
 
   return (
-    <>
-    <div className="container">
-      <div className="input-container">
-        <label>Enter Minutes </label>
-        <input
-          type="number"
-          value={inputMinutes}
-          onChange={handleChange}
-          disabled={isRunning}
-        />
-        <div>
-          <p>
-            <FaCirclePlay onClick={handleStart} />
-            {String(time.hours).padStart(2, "0")} :{" "}
-            {String(time.minutes).padStart(2, "0")} :{" "}
-            {String(time.seconds).padStart(2, "0")}
-          </p>
+    <div className="main">
+      <div className="container">
+        <div className="input-container">
+          <label>Enter Minutes </label>
+          <input
+            type="number"
+            value={inputMinutes}
+            onChange={handleChange}
+            disabled={isRunning}
+            style={{ outline: "none" }}
+          />
+          <div>
+            <p>
+              <FaCirclePlay
+                style={{ fontSize: "40px" }}
+                onClick={handleStart}
+              />
+              {String(time.hours).padStart(2, "0")} :{" "}
+              {String(time.minutes).padStart(2, "0")} :{" "}
+              {String(time.seconds).padStart(2, "0")}
+            </p>
+          </div>
         </div>
       </div>
     </div>
-    </>
-    
   );
 };
 
